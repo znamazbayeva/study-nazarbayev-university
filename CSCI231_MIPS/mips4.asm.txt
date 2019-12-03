@@ -1,5 +1,5 @@
 # Implement a procedure ​reverse ​in MIPS assembly language that, given a string ​S ​and its 
-# length​, reverses ​S​.
+length​, reverses ​S​.
 
 .data 
 	
