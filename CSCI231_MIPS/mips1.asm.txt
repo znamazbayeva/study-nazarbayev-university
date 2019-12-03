@@ -1,4 +1,4 @@
-# First 7 Fibonacci numbers
+
 
 .data
 	Fib: .word 0 1
