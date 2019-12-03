@@ -1,5 +1,5 @@
-/1. Implement a ​‘replace’ ​procedure (function) in MIPS assembly language that, given an array of integers ​Arr​, its ​length​, integers ​x ​and ​y​, replaces all ​x ​with ​y ​in Arr​. Then your program should print out all values of ​Arr​.
-For example, if ​Arr ​= {21, ​20​, 51, 83, ​20​, ​20​}​, ​length ​= 6, ​x =​ ​20​, ​y ​= ​5 ​and ​index ​= 0, then after running your program the values of ​Arr ​MUST be ​Arr ​= {21, ​5​, 51, 83, 5​, ​5​} ​and the values MUST be printed out. ​Your procedure must follow the MIPS procedure call conventions./
+ Implement a ​‘replace’ ​procedure (function) in MIPS assembly language that, given an array of integers ​Arr​, its ​length​, integers ​x ​and ​y​, replaces all ​x ​with ​y ​in Arr​. Then your program should print out all values of ​Arr​.
+For example, if ​Arr ​= {21, ​20​, 51, 83, ​20​, ​20​}​, ​length ​= 6, ​x =​ ​20​, ​y ​= ​5 ​and ​index ​= 0, then after running your program the values of ​Arr ​MUST be ​Arr ​= {21, ​5​, 51, 83, 5​, ​5​} ​and the values MUST be printed out. ​Your procedure must follow the MIPS procedure call conventions.
 
 .data
 	arr: .word 21, 20, 51, 83, 20, 20
