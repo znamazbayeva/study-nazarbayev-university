@@ -1,0 +1,140 @@
+# Implement a procedure circleRainbow in MIPS assembly language that draws a circle (note # that it should draw, not fill a circle).
+
+
+.data
+DISPLAY: .space 16384 
+DISPLAYWIDTH: .word 64
+DISPLAYHEIGHT: .word 64
+
+x: .word 32
+y: .word 32
+radius: .word 15
+color: .word 0x000000ff, 0x00FF0000, 0x0000FF00, 0x000000FF, 0x00FF0000, 0x00FFFFFF, 0x000000FF, 0x0000FF00, 0x00000000, 0x000000FF, 
+
+.text
+lw $a0, x 
+lw $a1, y 
+lw $a2, radius
+la $a3, color
+
+	addi $sp, $sp, -16
+	sw $s0, 12($sp)
+	sw $s1, 8($sp)
+	sw $s2, 4($sp)
+	sw $ra, 0($sp)
+	move $s0, $a0 #x
+	move $s1, $a1 #y
+	move $s2, $a2 #radius
+
+big_loop:
+
+	lw $t3, ($a3)
+	jal bresenham
+	addi $a2, $a2, -1
+	add $a3, $a3, 4
+	beq $a2, $t6, end
+	j big_loop
+
+bresenham: 
+	#Bresenham's algorithm
+	li $t0, 0 #x = 0
+	move $t1, $s2 #y = r
+	sll $t2, $s2, 1 # 2*r
+	li $t3, 3 #can use again
+	sub  $t4, $t3, $s2 # d = 3 - 2r
+
+	
+	loop:	#Pixel colors set
+		bgt $t0, $t1, big_loop	#If X>Y - circle is drawn
+		addi $t0, $t0, 1 #x++
+		bgtz $t4, d0		# d > 0
+	
+		# d <= 0
+	 
+		sll $t3, $t0, 2 # d = d + 4 * x + 6; 
+		addi $t3, $t3, 6
+		add $t4, $t4, $t3
+		jal draw_circle
+		
+
+	d0:
+		# d > 0
+		subi $t1, $t1, 1  #y--
+		sub $t2, $t0, $t1 #d = d + 4 * (x - y) + 10;
+		sll $t3, $t2, 2
+		addi $t3, $t3, 10
+		add $t4, $t4, $t3
+		jal draw_circle	
+		
+	draw_circle:
+						#Setting pixel colors:
+	 	#Set the color of 1st pixel
+		sub $a0, $s0, $t0	# x0 - x
+		sub $a1, $s1, $t1	# y0 - y
+		jal set_color
+	
+		#Set the color of 2nd pixel
+		sub $a0, $s0, $t0	# x0 - x
+		add $a1, $s1, $t1	#y0 + y
+		jal set_color
+
+		#Set the color of 3rd pixel
+		add $a0, $s0, $t0	# x0 + x
+		sub $a1, $s1, $t1	#y0 - y
+		jal set_color
+	
+		#Set the color of 4th pixel
+		add $a0, $s0, $t0	# x0 + x
+		add $a1, $s1, $t1	#y0 + y
+		jal set_color
+	
+		#Set the color of 5th pixel
+		sub $a0, $s0, $t0	# x0 - x
+		sub $a1, $s1, $t1	# y0 - y
+		jal set_color
+	
+		#Set the color of 6nd pixel
+		sub $a0, $s0, $t0	# x0 - x
+		add $a1, $s1, $t1	#y0 + y
+		jal set_color
+
+		#Set the color of 7rd pixel
+		add $a0, $s0, $t0	# x0 + x
+		sub $a1, $s1, $t1	#y0 - y
+		jal set_color
+	
+		#Set the color of 8th pixel
+		add $a0, $s0, $t0	# x0 + x
+		add $a1, $s1, $t1	#y0 + y
+		jal set_color
+		j loop	# drawCircle(xc, yc, x, y); 
+	
+	
+	   
+end:
+	lw $s0, 12($sp)
+	lw $s1, 8($sp)
+	lw $s2, 4($sp)
+	lw $ra, 0($sp)
+	addi $sp, $sp, 16
+	
+	li $v0, 10		
+	syscall
+	
+set_color:
+	lw $t9, DISPLAYWIDTH
+	mul $t9, $t9, $a1 
+	add $t9, $t9, $a0 	
+	sll $t9, $t9, 2 	
+	la $t3, DISPLAY 	
+	add $t3, $t3, $t9	
+	sw $a3, ($t3) 		
+	jr $ra 
+	
+
+
+	
+	
+
+			
+

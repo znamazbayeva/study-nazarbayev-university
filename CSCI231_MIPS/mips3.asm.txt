@@ -1,0 +1,87 @@
+/1. Implement a ​‘replace’ ​procedure (function) in MIPS assembly language that, given an array of integers ​Arr​, its ​length​, integers ​x ​and ​y​, replaces all ​x ​with ​y ​in Arr​. Then your program should print out all values of ​Arr​.
+For example, if ​Arr ​= {21, ​20​, 51, 83, ​20​, ​20​}​, ​length ​= 6, ​x =​ ​20​, ​y ​= ​5 ​and ​index ​= 0, then after running your program the values of ​Arr ​MUST be ​Arr ​= {21, ​5​, 51, 83, 5​, ​5​} ​and the values MUST be printed out. ​Your procedure must follow the MIPS procedure call conventions./
+
+.data
+	arr: .word 21, 20, 51, 83, 20, 20
+	len: .word 6
+	x: .word 20
+	y: .word 5
+	space: .asciiz " "
+	nl: .asciiz "\n"
+.text
+
+	la $a0, arr
+	lw $a1, len
+	lw $a2, x
+	lw $a3, y
+
+	jal print
+	
+	la $a0, arr
+	jal replace
+
+	jal print
+	jal bye
+
+print: 
+
+	move $t0, $a0
+	li $t1, 0
+
+	loop2:
+		beq $t1, $a1, exit
+		lw $t2, 0($t0) # t1 = Arr[i]
+ 
+		li $v0, 1 #Print
+		add $a0, $t2, $zero
+		syscall
+
+		li $v0, 4
+		la $a0, space
+		syscall
+
+		addi $t1, $t1, 1 # i++
+		addi $t0, $t0, 4#rr[i + 1]
+
+	j loop2
+
+	exit: 	
+		li $v0, 4
+		la $a0, nl
+		syscall
+	
+		jr $ra
+		
+
+
+replace:
+	move $t0, $a0
+	li $t4, 0
+	
+	loop:
+	
+		beq $t4, $a1, push
+		lw $t5, 0($t0) # t1 = Arr[i]
+		addi $t4, $t4, 1 # i++
+
+		bne $a2, $t5, cond # if(y == Arr[i])
+		sw $a3, 0($t0) # m = xs[i]
+		addi $t0, $t0, 4#rr[i + 1]
+	
+	j loop	
+		cond:
+		addi $t0, $t0, 4#rr[i + 1]
+		bne $t4, $a1, loop
+	
+	
+
+	push: 
+		jr $ra
+	
+bye:
+
+	li $v0, 10
+	syscall
+
+	jr $ra
+ 	

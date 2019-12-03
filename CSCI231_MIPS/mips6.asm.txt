@@ -1,0 +1,56 @@
+/Write a program in MIPS assembly language that prompts the user for two integers and prints out the sum of these integers to the console. Recall that the largest positive integer and the smallest negative integer that can be stored in one word is 2147483647 and -2147483648, respectively./
+
+.data
+	int1: .asciiz "The first integer: \n"
+	int2: .asciiz "The second integer: \n"
+	wrong: .asciiz "Try again! \n"
+	sum: .asciiz "The sum: "
+	
+.text
+	jal input
+	
+	li $v0, 4 #print 
+	la $a0, sum
+	syscall
+	
+	li $v0, 1, #print integer
+	move $a0, $t0
+	syscall
+	
+	li $v0, 10
+	syscall
+	jr $ra
+
+input: 
+	li $v0, 4, #print integer
+	la $a0, int1
+	syscall
+
+	li $v0, 5 #scanf integer
+	syscall	
+	move $a1, $v0 #first integer
+	
+	
+	li $v0, 4, #print integer
+	la $a0, int2
+	syscall
+
+	li $v0, 5 #scanf integer
+	syscall
+	
+	move $a2, $v0 #second integer
+	
+	add $t0, $a1, $a2
+	
+	jr $ra
+	
+	.ktext 0x80000180
+	li $v0, 4 #print 
+	la $a0, wrong
+	syscall
+	mfc0 $k0,$14   # Coprocessor 0 register $14 has address of trapping instruction
+   	la $k0, input # add input 
+   	mtc0 $k0,$14   # Store new address back into $14
+   	eret           # Error return; set PC to value in $14
+   	.kdata
+ 

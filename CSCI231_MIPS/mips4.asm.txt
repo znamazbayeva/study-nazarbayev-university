@@ -1,0 +1,71 @@
+# Implement a procedure ​reverse ​in MIPS assembly language that, given a string ​S ​and its 
+# length​, reverses ​S​.
+
+.data 
+	
+	S: .space 25
+	length: .word 5
+	nl: .asciiz "\n"
+	output: .space 25
+	msgStr: .asciiz "Your string: "
+	rev1: .asciiz "Reversed text: "
+	length1: .asciiz "The length of the string: "
+	len: .space 25
+
+.text
+	li $v0, 4
+	la $a0, msgStr
+	syscall
+	
+	la $a0, S
+	li $a1, 25
+	li $v0, 8
+	syscall
+	
+	move $t5, $a0
+	
+	li $v0, 4,
+	la $a0, length1
+	syscall
+	
+	li $v0, 5
+	syscall
+	
+	move $t9, $v0
+	
+
+	li $t1, 0	
+	subi $t7, $t9, 1
+	li $t3, 0
+
+	
+	
+	
+reverse:
+	add $t2, $t5, $t1
+	lb $t4, 0($t2)
+	beqz $t4, print
+	#add $t6, $t5, $t7
+	#lb $t8, 0($t6)
+	
+	sb $t4, output($t7)
+	#sb $t8, output($t1)
+	subi $t7, $t7, 1
+	addi $t1, $t1, 1
+	j reverse
+
+print:
+	
+	li $v0, 11
+	la $a0, '\n'
+	syscall
+	
+	li $v0, 4
+	la $a0, rev1
+	syscall
+	
+	li $v0, 4
+	la $a0, output
+	syscall
+	
+	

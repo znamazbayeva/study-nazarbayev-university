@@ -1,0 +1,99 @@
+/implement a procedure ​string_bubble_sort in MIPS assembly language that, given a string ​S ​and its ​length​, sort ​S​. You should print out the original string and the sorted string respectively./
+
+.data
+	S: .space 25
+	output: .space 25
+	msgStr: .asciiz "Your string: "
+	rev1: .asciiz "Reversed text: "
+	length1: .asciiz "The length of the string: "
+	
+.text
+
+	li $v0, 4 #print 
+	la $a0, msgStr
+	syscall
+	
+	la $a0, S # scanf string
+	li $a1, 25
+	li $v0, 8
+	syscall
+	
+	move $t5, $a0 #array char address
+	
+	li $v0, 4, #print integer
+	la $a0, length1
+	syscall
+	
+	li $v0, 5 #scanf integer
+	syscall
+	
+	move $a1, $v0 #length
+	
+sort: addi $sp, $sp, -20 #space in stack
+	sw $ra, 16($sp)
+	sw $s3, 12($sp)
+	sw $s2, 8($sp)
+	sw $s1, 4($sp)
+	sw $s0, 0($sp)
+
+	move $s0, $zero #i
+	move $s2, $t5 #address
+	move $a0, $t5
+	move $s3, $a1 # n
+	
+	
+	addi $t5, $s3, -1 # n - 1
+	
+for1tst: 
+	slt $t0, $s0, $t5 # if i > n-1
+	 beq $t0, $zero, exit1
+	 li $s1, 0 # j = 0
+	 sub $t6, $t5, $s0 # n - 1 - i
+for2tst: slt $t0, $s1, $t6 #if j > (n -1- i)
+	 beq $t0, $zero, exit2
+	 add $t2, $s2, $s1 # address + j
+	 lb $t3, 0($t2) # v[j]
+	 lb $t4, 1($t2) # v[j + 1]
+	 slt $t0, $t4, $t3 # v[j + 1] > v[j]
+	 beq $t0, $zero, exit2
+	 
+	 move $a0, $s2
+	 move $a1, $s1
+	 jal swap
+	 
+	 addi $s1, $s1, 1 #j++
+	 j for2tst
+
+exit2: 	addi $s0, $s0, 1
+	j for1tst
+	
+	
+exit1: 	li $v0, 4 # reversed string 
+	move $a0, $a0
+	syscall
+
+
+	lw $s0, 0($sp)
+	lw $s1, 4($sp)
+	lw $s2, 8($sp)
+	lw $s3, 12($sp)
+	lw $ra, 16($sp)
+	addi $sp, $sp, 20
+	
+	li $v0, 10
+    	syscall
+
+	 
+swap:	add $t1, $a0, $a1
+
+	lb $t0, 0($t1)
+	lb $t2, 1($t1)
+	sb $t2, 0($t1)
+	sb $t0, 1($t1)
+	jr $ra
+	 
+	
+	
+	
+	
+	

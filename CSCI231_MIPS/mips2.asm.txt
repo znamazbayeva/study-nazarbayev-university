@@ -1,0 +1,73 @@
+# Implement a ​‘replace’ ​program in MIPS assembly language that, given an array of integers # Arr​, its ​length​, integers ​x and ​y,​ replaces all ​x with ​y in ​Arr.​ Then your program 
+# should print out al
+# l values of ​Arr​.
+
+# For example, if ​Arr = {21, ​20​, 51, 83, ​20​, ​20​}​, ​length = 6, ​x = ​20​, ​y = ​5 and ​index = 0, # then after running your program the values of ​Arr MUST be ​Arr = {21, ​5​, 51, 83,​ 5​, ​5​}​ 
+# and the values MUST be printed out.
+
+
+.data
+
+msg1: .asciiz "x="
+nl: .asciiz " "
+list: .word 21, 20, 51, 83, 20, 20
+x: .word 20
+n: .word 6
+y: .word 5
+
+.text
+
+main:
+la $t3, list
+lw $t2, x
+lw $a1, n
+lw $t4, y
+li $t0, 0 # i = 0
+
+
+
+
+
+
+loop:
+beq $t0, $a1, exit
+
+lw $t1, 0($t3) # t1 = Arr[i]
+addi $t0, $t0, 1 # i++
+
+
+
+
+bne $t2, $t1, cond # if(y == Arr[i])
+sw $t4, ($t3) # m = xs[i]
+lw $t1, 0($t3)
+li $v0, 1 #Print
+add $a0, $t1, $zero
+syscall
+
+li $v0, 4
+la $a0, nl
+syscall
+addi $t3, $t3, 4 #Arr[i + 1]
+
+j loop
+
+cond:
+addi $t3, $t3, 4 #Arr[i + 1]
+li $v0, 1 #Print
+add $a0, $t1, $zero
+syscall
+
+li $v0, 4
+la $a0, nl
+syscall
+bne $t0, $a1, loop
+
+
+
+
+exit:
+li $v0, 10
+syscall
+
+
