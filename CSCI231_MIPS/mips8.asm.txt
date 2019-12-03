@@ -1,4 +1,4 @@
-# Implement a procedure circleRainbow in MIPS assembly language that draws a circle (note # that it should draw, not fill a circle).
+Implement a procedure circleRainbow in MIPS assembly language that draws a circle (note that it should draw, not fill a circle).
 
 
 .data
