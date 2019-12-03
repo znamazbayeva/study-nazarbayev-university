@@ -1,4 +1,4 @@
-# The trigonometric function cosine has the following Taylor expansion of cos(x)
+The trigonometric function cosine has the following Taylor expansion
 
 .data
 	inInt: .asciiz "Give a degree to cos(x): "
