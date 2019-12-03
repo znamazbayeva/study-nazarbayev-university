@@ -1,4 +1,4 @@
-/Write a program in MIPS assembly language that prompts the user for two integers and prints out the sum of these integers to the console. Recall that the largest positive integer and the smallest negative integer that can be stored in one word is 2147483647 and -2147483648, respectively./
+Write a program in MIPS assembly language that prompts the user for two integers and prints out the sum of these integers to the console. Recall that the largest positive integer and the smallest negative integer that can be stored in one word is 2147483647 and -2147483648, respectively.
 
 .data
 	int1: .asciiz "The first integer: \n"
