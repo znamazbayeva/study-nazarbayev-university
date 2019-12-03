@@ -1,4 +1,4 @@
-/implement a procedure ​string_bubble_sort in MIPS assembly language that, given a string ​S ​and its ​length​, sort ​S​. You should print out the original string and the sorted string respectively./
+implement a procedure ​string_bubble_sort in MIPS assembly language that, given a string ​S ​and its ​length​, sort ​S​. You should print out the original string and the sorted string respectively.
 
 .data
 	S: .space 25
