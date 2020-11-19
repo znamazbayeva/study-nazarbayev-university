@@ -1,4 +1,4 @@
-These are assignments and projects done in my university. 
+These are assignments and projects done by me in my university. 
 
 Current courses:
 
