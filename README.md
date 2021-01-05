@@ -7,3 +7,4 @@ Current courses:
 3. CSCI235 - Programming languages (Java, Python, Prolog)
 4. CSCI390 - Artificial intelligence (Python)
 5. CSCI360 - Software Engineering (Java, Javascript)
+5. CSCI273 - Algorithms(C++)
